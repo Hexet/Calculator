@@ -9,7 +9,7 @@ namespace ClassLibrary
     public class TCtrl
     {
         Action activeState;
-        bool clear = false;
+        bool clear = false, oneRepeat = true;
         public enum EditCommand
         {
             addDigit = 1,
@@ -78,7 +78,7 @@ namespace ClassLibrary
         }
         public string ExecuteCalculatorCommand(CalculatorCommand cmd)
         {
-            clear = true;
+            clear = true; oneRepeat = true;
             switch (cmd)
             {
                 case CalculatorCommand.add:
@@ -118,8 +118,14 @@ namespace ClassLibrary
         }
         public string GetResult()
         {
+            if (oneRepeat)
+            {
+                number = converter.ConvertBaseTo10(number.systemBase, editor.number);
+                oneRepeat = false;
+            }
+
             update();
-            SetInitialStateCalculator();
+            setState(Editing);
             return editor.number;
         }
         void ExecuteOperation(TProc.TOprtn oprtn)
@@ -131,13 +137,16 @@ namespace ClassLibrary
         {
             number = converter.ConvertBaseTo10(number.systemBase, editor.number);
             processor.WriteRightOperand(number);
+            
             processor.WriteFunction(func);
             processor.ExecuteFunction();
-            editor.number = processor.ReadRightOperand().number.ToString();
-        }
-        public void ExecuteMemoryCommand()
-        {
+            if (activeState == Start)
+            {
+                processor.WriteLeftOperand(processor.ReadRightOperand());
+                setState(Editing);
+            }
 
+            editor.number = processor.ReadRightOperand().number.ToString();
         }
         void Start()
         {
@@ -147,31 +156,17 @@ namespace ClassLibrary
         }
         void Editing()
         {
-            number = converter.ConvertBaseTo10(number.systemBase, editor.number);
+            if (oneRepeat)
+                number = converter.ConvertBaseTo10(number.systemBase, editor.number);
             processor.WriteRightOperand(number);
             processor.ExecuteOperation();
             editor.number = processor.ReadLeftOperand().number.ToString();
             setState(Editing);
         }
-        void FunDone()
+        public void ExecuteMemoryCommand()
         {
 
         }
-        void ValDone()
-        {
 
-        }
-        void ExpDone()
-        {
-
-        }
-        void OpChange()
-        {
-
-        }
-        void Error()
-        {
-
-        }
     }
 }
