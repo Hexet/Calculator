@@ -27,19 +27,27 @@ namespace ClassLibrary
         }
         public void Add(TPNumber E)
         {
+            FNumber.systemBase = E.systemBase;
             FNumber = FNumber.Add(E);
         }
-        public void Clear()
+        public void Sub(TPNumber E)
+        {
+            FNumber.systemBase = E.systemBase;
+            FNumber = FNumber.Subtract(E);
+        }
+        public void Clear(TPNumber E)
         {
             FNumber.Reset();
+            FNumber.systemBase = E.systemBase;
             FState = MState._Off;
         }
         public string ReadStatusMemory()
         {
             return FState.ToString();
         }
-        public TPNumber ReadNumber()
+        public TPNumber ReadNumber(TPNumber E)
         {
+            FNumber.systemBase = E.systemBase;
             return FNumber.Copy();
         }
     }

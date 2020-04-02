@@ -62,6 +62,13 @@ namespace ClassLibrary
 
             UInt64 num1 = 0, num_res1 = 0;
 
+            int flag_minus = 0;
+            if (strnum[0] == '-')
+            {
+                flag_minus = 1;
+                strnum = strnum.Trim(new Char[] { '-'});
+            }
+
             for (int i = 0; i < strnum.Length && flag != 1; i++)
             {
                 if (strnum[i] == ',')
@@ -78,13 +85,7 @@ namespace ClassLibrary
             }
             else
                 num1 = UInt64.Parse(strnum);
-
-            int flag_minus = 0;
-            if (strnum[0] == '-')
-            {
-                flag_minus = 1;
-
-            }
+            
             /* РАЗБИРАЕМСЯ С ЦЕЛОЙ ЧАСТЬЮ */
             while (num1 >= (UInt64)p2)
             {
@@ -169,9 +170,10 @@ namespace ClassLibrary
         }
         public TPNumber ConvertBaseTo10(int p1, string strnum)
         {
-
             int mod, k = 0, flag_sym = 0, check_num = 0;
             TPNumber numres = new TPNumber(0, p1);
+            if (strnum == "0")
+                return numres;
             double num = 0;
             if (p1 == 10)
             {

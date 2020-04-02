@@ -27,6 +27,14 @@ namespace ClassLibrary
             square,
             reverse
         }
+        public enum MemoryCommand
+        {
+            clear = 1,
+            write,
+            add,
+            read,
+            sub
+        }
         public TCtrl()
         {
             SetInitialStateCalculator();
@@ -146,7 +154,7 @@ namespace ClassLibrary
                 setState(Editing);
             }
 
-            editor.number = processor.ReadRightOperand().number.ToString();
+            editor.number = converter.Convert10ToBase(number.systemBase, processor.ReadRightOperand().number.ToString());
         }
         void Start()
         {
@@ -160,12 +168,41 @@ namespace ClassLibrary
                 number = converter.ConvertBaseTo10(number.systemBase, editor.number);
             processor.WriteRightOperand(number);
             processor.ExecuteOperation();
-            editor.number = processor.ReadLeftOperand().number.ToString();
+            editor.number = converter.Convert10ToBase(number.systemBase, processor.ReadLeftOperand().number.ToString());
             setState(Editing);
         }
-        public void ExecuteMemoryCommand()
+        public string ChangeSystemBase(int _base)
         {
-
+            number = converter.ConvertBaseTo10(number.systemBase, editor.number);
+            number.systemBase = _base;
+            editor.number = converter.Convert10ToBase(number.systemBase, number.GetNumberString());
+            return editor.number;
+        }
+        public string ExecuteMemoryCommand(MemoryCommand cmd)
+        {
+            number = converter.ConvertBaseTo10(number.systemBase, editor.number);
+            switch (cmd)
+            {
+                case MemoryCommand.add:
+                    memory.Add(number);
+                    break;
+                case MemoryCommand.sub:
+                    memory.Sub(number);
+                    break;
+                case MemoryCommand.clear:
+                    memory.Clear(number);
+                    break;
+                case MemoryCommand.read:
+                    number = memory.ReadNumber(number);
+                    break;
+                case MemoryCommand.write:
+                    memory.Write(number);
+                    break;
+                default:
+                    break;
+            }
+            editor.number = converter.Convert10ToBase(number.systemBase, number.GetNumberString());
+            return editor.number;
         }
 
     }

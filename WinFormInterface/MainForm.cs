@@ -23,6 +23,7 @@ namespace WinFormInterface
             numUpDown.ValueChanged += NumUpDown_ValueChanged;
             control.number.systemBase = trackBar.Value;
             Enabled_Num();
+            Enabled_Memory();
             but0.Click += But_Click;
             but1.Click += But_Click;
             but2.Click += But_Click;
@@ -51,6 +52,44 @@ namespace WinFormInterface
             butInvert.Click += ButInvert_Click;
             butClear.Click += ButClear_Click;
             butRes.Click += ButRes_Click;
+            butMC.Click += ButMC_Click;
+            butMS.Click += ButMS_Click;
+            butMR.Click += ButMR_Click;
+            butMp.Click += ButMp_Click;
+            butMm.Click += ButMm_Click;
+            butExit.Click += ButExit_Click;
+        }
+
+        private void ButExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void ButMm_Click(object sender, EventArgs e)
+        {
+            control.ExecuteMemoryCommand(TCtrl.MemoryCommand.sub);
+        }
+
+        private void ButMp_Click(object sender, EventArgs e)
+        {
+            control.ExecuteMemoryCommand(TCtrl.MemoryCommand.add);
+        }
+
+        private void ButMR_Click(object sender, EventArgs e)
+        {
+            textBox.Text = control.ExecuteMemoryCommand(TCtrl.MemoryCommand.read);
+        }
+
+        private void ButMS_Click(object sender, EventArgs e)
+        {
+            control.ExecuteMemoryCommand(TCtrl.MemoryCommand.write);
+            Enabled_Memory();
+        }
+
+        private void ButMC_Click(object sender, EventArgs e)
+        {
+            control.ExecuteMemoryCommand(TCtrl.MemoryCommand.clear);
+            Enabled_Memory();
         }
 
         private void ButRes_Click(object sender, EventArgs e)
@@ -121,14 +160,31 @@ namespace WinFormInterface
         private void NumUpDown_ValueChanged(object sender, EventArgs e)
         {
             trackBar.Value = Convert.ToInt32(numUpDown.Value);
-            control.number.systemBase = Convert.ToInt32(numUpDown.Value); ;
+            textBox.Text = control.ChangeSystemBase(Convert.ToInt32(numUpDown.Value));
             Enabled_Num();
         }
         private void TrackBar_ValueChanged(object sender, EventArgs e)
         {
             numUpDown.Value = trackBar.Value;
-            control.number.systemBase = trackBar.Value;
+            textBox.Text = control.ChangeSystemBase(trackBar.Value);
             Enabled_Num();
+        }
+        private void Enabled_Memory()
+        {
+            if (control.memory.ReadStatusMemory() == "_On")
+            {
+                butMC.Enabled = true;
+                butMR.Enabled = true;
+                butMp.Enabled = true;
+                butMm.Enabled = true;
+            }
+            else
+            {
+                butMC.Enabled = false;
+                butMR.Enabled = false;
+                butMp.Enabled = false;
+                butMm.Enabled = false;
+            }
         }
         private void Enabled_Num()
         {
@@ -168,6 +224,25 @@ namespace WinFormInterface
                 case Keys.OemPeriod:
                 case Keys.Decimal:
                     textBox.Text = control.ExecuteEditorCommand(TCtrl.EditCommand.addDelim);
+                    break;
+
+                case Keys.Multiply:
+                    textBox.Text = control.ExecuteCalculatorCommand(TCtrl.CalculatorCommand.multiply);
+                    break;
+
+                case Keys.Oem2:
+                case Keys.Divide:
+                    textBox.Text = control.ExecuteCalculatorCommand(TCtrl.CalculatorCommand.divide);
+                    break;
+
+                case Keys.Oemplus:
+                case Keys.Add:
+                    textBox.Text = control.ExecuteCalculatorCommand(TCtrl.CalculatorCommand.add);
+                    break;
+
+                case Keys.Subtract:
+                case Keys.OemMinus:
+                    textBox.Text = control.ExecuteCalculatorCommand(TCtrl.CalculatorCommand.subtract);
                     break;
 
                 default:
