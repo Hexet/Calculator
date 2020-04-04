@@ -114,7 +114,7 @@ namespace ClassLibrary
         }
         public void SetInitialStateCalculator()
         {
-            setState(Start);
+            setState(FirstOperand);
         }
         public void setState(Action state)
         {
@@ -133,7 +133,7 @@ namespace ClassLibrary
             }
 
             update();
-            setState(Editing);
+            setState(SecondOperand);
             return editor.number;
         }
         void ExecuteOperation(TProc.TOprtn oprtn)
@@ -148,28 +148,28 @@ namespace ClassLibrary
             
             processor.WriteFunction(func);
             processor.ExecuteFunction();
-            if (activeState == Start)
+            if (activeState == FirstOperand)
             {
                 processor.WriteLeftOperand(processor.ReadRightOperand());
-                setState(Editing);
+                setState(SecondOperand);
             }
 
             editor.number = converter.Convert10ToBase(number.systemBase, processor.ReadRightOperand().number.ToString());
         }
-        void Start()
+        void FirstOperand()
         {
             number = converter.ConvertBaseTo10(number.systemBase, editor.number);
             processor.WriteLeftOperand(number);
-            setState(Editing);
+            setState(SecondOperand);
         }
-        void Editing()
+        void SecondOperand()
         {
             if (oneRepeat)
                 number = converter.ConvertBaseTo10(number.systemBase, editor.number);
             processor.WriteRightOperand(number);
             processor.ExecuteOperation();
             editor.number = converter.Convert10ToBase(number.systemBase, processor.ReadLeftOperand().number.ToString());
-            setState(Editing);
+            setState(SecondOperand);
         }
         public string ChangeSystemBase(int _base)
         {
