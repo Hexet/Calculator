@@ -58,6 +58,28 @@ namespace WinFormInterface
             butMp.Click += ButMp_Click;
             butMm.Click += ButMm_Click;
             butExit.Click += ButExit_Click;
+            butArtists.Click += ButArtists_Click;
+            butAbout.Click += ButAbout_Click;
+            butSettings.Click += ButSettings_Click;
+        }
+
+        private void ButSettings_Click(object sender, EventArgs e)
+        {
+            SettingsForm settingsForm = new SettingsForm();
+            settingsForm.Owner = this;
+            settingsForm.ShowForm();
+        }
+
+        private void ButAbout_Click(object sender, EventArgs e)
+        {
+            InfoForm infoForm = new InfoForm();
+            infoForm.ShowAbout();
+        }
+
+        private void ButArtists_Click(object sender, EventArgs e)
+        {
+            InfoForm infoForm = new InfoForm();
+            infoForm.ShowArtists();
         }
 
         private void ButExit_Click(object sender, EventArgs e)
@@ -167,6 +189,13 @@ namespace WinFormInterface
         {
             numUpDown.Value = trackBar.Value;
             textBox.Text = control.ChangeSystemBase(trackBar.Value);
+            Enabled_Num();
+        }
+        public void SystemBaseChangedSetting(int value)
+        {
+            numUpDown.Value = value;
+            trackBar.Value = value;
+            textBox.Text = control.ChangeSystemBase(value);
             Enabled_Num();
         }
         private void Enabled_Memory()

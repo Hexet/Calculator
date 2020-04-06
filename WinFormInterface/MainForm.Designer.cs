@@ -68,10 +68,10 @@
             this.numUpDown = new System.Windows.Forms.NumericUpDown();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.butExit = new System.Windows.Forms.ToolStripButton();
-            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
             this.butAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.butArtists = new System.Windows.Forms.ToolStripMenuItem();
+            this.butSettings = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDown)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -642,7 +642,7 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.butExit,
-            this.toolStripDropDownButton1,
+            this.butSettings,
             this.toolStripDropDownButton2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
@@ -657,15 +657,6 @@
             this.butExit.Name = "butExit";
             this.butExit.Size = new System.Drawing.Size(46, 22);
             this.butExit.Text = "Выход";
-            // 
-            // toolStripDropDownButton1
-            // 
-            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
-            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(80, 22);
-            this.toolStripDropDownButton1.Text = "Настройки";
             // 
             // toolStripDropDownButton2
             // 
@@ -682,14 +673,23 @@
             // butAbout
             // 
             this.butAbout.Name = "butAbout";
-            this.butAbout.Size = new System.Drawing.Size(180, 22);
+            this.butAbout.Size = new System.Drawing.Size(147, 22);
             this.butAbout.Text = "о программе";
             // 
             // butArtists
             // 
             this.butArtists.Name = "butArtists";
-            this.butArtists.Size = new System.Drawing.Size(180, 22);
+            this.butArtists.Size = new System.Drawing.Size(147, 22);
             this.butArtists.Text = "авторы";
+            // 
+            // butSettings
+            // 
+            this.butSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.butSettings.Image = ((System.Drawing.Image)(resources.GetObject("butSettings.Image")));
+            this.butSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.butSettings.Name = "butSettings";
+            this.butSettings.Size = new System.Drawing.Size(71, 22);
+            this.butSettings.Text = "Настройки";
             // 
             // MainForm
             // 
@@ -790,10 +790,10 @@
         private System.Windows.Forms.NumericUpDown numUpDown;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton butExit;
-        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton2;
         private System.Windows.Forms.ToolStripMenuItem butAbout;
         private System.Windows.Forms.ToolStripMenuItem butArtists;
+        private System.Windows.Forms.ToolStripButton butSettings;
     }
 
     }
